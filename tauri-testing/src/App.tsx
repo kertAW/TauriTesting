@@ -40,6 +40,18 @@ function App() {
     ],
   });
 
+  const initialChartData = {
+    labels: [],
+    datasets: [
+      {
+        label: "Random Y Value",
+        data: [],
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
+  };
+
   onMount(() => {
     const interval = setInterval(async () => {
       // Invoke the command to get [y, x]
@@ -68,6 +80,10 @@ function App() {
 
   async function greet() {
     setGreetMsg(await invoke("greet", { name: name() }));
+  }
+
+  function clearChart() {
+    setChartData(initialChartData);
   }
 
   return (
@@ -103,7 +119,10 @@ function App() {
       </form>
       <p>{greetMsg()}</p>
       
-      <h2>Real-time Random Data</h2>
+      <div class="row" style={{"align-items": "center"}}>
+        <h2>Real-time Random Data</h2>
+        <button onClick={clearChart} style={{"margin-left": "1rem"}}>Clear Chart</button>
+      </div>
       <div style={{ "max-width": "1200px", width: "100%", margin: "0 auto" }}>
         <Line data={chartData()} options={{ responsive: true }} />
       </div>
